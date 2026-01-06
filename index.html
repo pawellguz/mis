@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Portfolio PRO v3 (Infinite)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --accent: #cfa159;
+            --accent-dark: #b08d55;
+            --text: #1e293b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin: 0 0 10px 0;
+            color: #0f172a;
+        }
+
+        p.sub {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+
+        .main-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Gender Switch */
+        .gender-switch {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            background: #f1f5f9;
+            padding: 6px;
+            border-radius: 50px;
+            display: inline-flex;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 1px solid var(--border);
+        }
+
+        .gender-option {
+            padding: 12px 35px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 700;
+            color: #64748b;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+        }
+
+        .gender-option:hover {
+            color: var(--accent);
+        }
+
+        .gender-option.active {
+            background: #fff;
+            color: var(--text);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            color: var(--accent-dark);
+        }
+
+        /* Sections */
+        .step-label {
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            margin-bottom: 15px;
+            display: block;
+            letter-spacing: 1.5px;
+        }
+
+        .step-section {
+            margin-bottom: 35px;
+        }
+
+        /* Tags */
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .tag-btn {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: #475569;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .tag-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent-dark);
+            background: #fffdf5;
+            transform: translateY(-1px);
+        }
+
+        .tag-btn.selected {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(207, 161, 89, 0.3);
+        }
+
+        /* Button */
+        .generate-btn {
+            background: #0f172a;
+            color: #fff;
+            border: none;
+            padding: 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: all 0.3s;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .generate-btn:hover {
+            background: #1e293b;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .generate-btn:active {
+            transform: translateY(0);
+        }
+
+        /* More Button */
+        .more-section {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px dashed #e2e8f0;
+        }
+
+        .more-text {
+            color: #64748b;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .more-btn {
+            background: #fff;
+            border: 2px solid var(--accent);
+            color: var(--accent-dark);
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .more-btn:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        /* Results */
+        .results-area {
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .result-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 25px;
+            position: relative;
+            animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.3s;
+        }
+
+        .result-item:hover {
+            border-color: var(--accent);
+            background: #fff;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-icon {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            font-size: 2rem;
+            opacity: 0.1;
+            filter: grayscale(100%);
+        }
+
+        .result-text {
+            white-space: pre-wrap;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            color: #334155;
+            margin-bottom: 20px;
+        }
+
+        .copy-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--accent-dark);
+            cursor: pointer;
+            text-transform: uppercase;
+            padding: 8px 16px;
+            background: #fff;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-link:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .icon {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>✂️ Generator Portfolio (Infinite)</h1>
+            <p class="sub">Silnik kombinatoryczny: Miliony unikalnych opisów.</p>
+        </header>
+
+        <div class="main-card">
+
+            <div class="gender-switch">
+                <div class="gender-option active" onclick="setGender('female')">👩 Damskie</div>
+                <div class="gender-option" onclick="setGender('male')">👨 Męskie</div>
+            </div>
+
+            <div class="step-section">
+                <span class="step-label">1. Rodzaj Usługi</span>
+                <div class="tag-group" id="serviceTags"></div>
+            </div>
+
+            <div class="step-section">
+                <span class="step-label">2. Szczegóły (Wybierz 1-3)</span>
+                <div class="tag-group" id="detailTags"></div>
+            </div>
+
+            <div class="step-section">
+                <span class="step-label">3. Klimat Posta</span>
+                <div class="tag-group" id="vibeTags">
+                    <button class="tag-btn selected" onclick="selectTag(this, 'vibe')"><span class="icon">✨</span>
+                        Elegancki</button>
+                    <button class="tag-btn" onclick="selectTag(this, 'vibe')"><span class="icon">😊</span>
+                        Luźny</button>
+                    <button class="tag-btn" onclick="selectTag(this, 'vibe')"><span class="icon">💼</span>
+                        Ekspert</button>
+                </div>
+            </div>
+
+            <button class="generate-btn" onclick="generateCaptions(false)">✨ Generuj 20 Propozycji</button>
+
+            <div class="results-area" id="resultsArea"></div>
+        </div>
+    </div>
+
+    <script>
+        // --- INFINITE CONTENT ENGINE ---
+
+        const synonyms = {
+            adj_pos: ["Niesamowita", "Spektakularna", "Cudowna", "Wyjątkowa", "Perfekcyjna", "Świetna", "Zjawiskowa", "Bezbłędna"],
+            adj_pos_m: ["Niesamowity", "Spektakularny", "Świetny", "Wyraźny", "Perfekcyjny", "Mocny", "Konkretny"],
+            verb_trans: ["wykonałam", "stworzyłam", "przygotowałam", "wydobyłam", "zrobiłam", "opracowałam"],
+            noun_hair: ["fryzura", "zmiana", "formy", "stylizacja", "metamorfoza", "koloryzacja"],
+            noun_hair_m: ["fryzura", "forma", "stylówka", "cięcie", "zmiana"],
+            time: ["na dziś", "na ten sezon", "na weekend", "dla niej", "dla klientki", "spełniająca marzenia"],
+            intro_exclaim: ["Wow! 🤩", "Co za zmiana! ✨", "Patrzcie na to! 👀", "Mamy to! 💪", "Efekt końcowy? 🔥", "Perełka! 💎"],
+        };
+
+        const templates = {
+            female: {
+                openers: [
+                    "{intro_exclaim} {adj_pos} {noun_hair} {time}. 💕",
+                    "{verb_trans} coś {adj_pos_m}ego. To była czysta przyjemność! ✨",
+                    "Dziś postawiłam na {noun_hair}. Efekt? {adj_pos}! 🥰",
+                    "Kolejna {adj_pos} {noun_hair} opuszcza mój fotel. 💇‍♀️",
+                    "Magia dzieje się na fotelu! ✨ {adj_pos} {noun_hair} gotowa.",
+                    "Nowa energia, nowa {noun_hair}! ⚡ Uwielbiam takie wyzwania!",
+                    "{noun_hair}, która przyciąga spojrzenia. 👀 {adj_pos} prawda?",
+                    "Kiedy {noun_hair} staje się sztuką... 🎨 {adj_pos} efekt.",
+                    "Subtelność i klasa. ✨ {adj_pos} {noun_hair} dla wyjątkowej osoby.",
+                    "Detale tworzą całość. 🔍 Spójrzcie na tę precyzję!"
+                ],
+                middles: {
+                    default: [
+                        "Skupiłam się na podkreśleniu naturalnego piękna ✨.",
+                        "Dopasowanie do typu urody to klucz do sukcesu 🗝️.",
+                        "Lekkość, świeżość i naturalność – o to chodziło 🌿.",
+                        "Włosy wyglądają teraz zdrowo i promiennie 💎.",
+                        "Idealne dopasowanie do stylu życia klientki 👌.",
+                        "Dbałość o kondycję włosa na pierwszym miejscu 🧬."
+                    ],
+                    'Koloryzacja': ["Głębia koloru zachwyca 🍫.", "Trójwymiarowy kolor pełen blasku ✨.", "Odcień idealnie dobrany do karnacji 🎨.", "Pigmentacja na najwyższym poziomie 🔝."],
+                    'Blond': ["Czysty, świetlisty blond bez żółtych tonów ❄️.", "Chłodne refleksy robią robotę 💎.", "Blond jak marzenie – perłowy i lśniący ✨.", "Rozświetlenie, które odmładza ☀️."],
+                    'Brąz': ["Szlechetna, głęboka czekolada 🍫.", "Brąz mieniący się w słońcu ☀️.", "Chłodne kakao – hit sezonu ☕.", "Naturalny, nasycony odcień 🌰."],
+                    'Rudy': ["Ognista energia w każdym paśmie 🔥.", "Miedź, która przyciąga wzrok 🦊.", "Wyrazisty kolor dla charakternej osoby ⚡.", "Rudości są teraz na topie! 🍁"],
+                    'Strzyżenie': ["Forma, która układa się sama 📐.", "Lekkie cieniowanie dodało objętości ☁️.", "Precyzyjna linia cięcia 📏.", "Fryzura zyskała nowe życie dzięki strzyżeniu ✂️."],
+                    'Bob': ["Klasyczny bob – elegancja sama w sobie 🖤.", "Nowoczesna wersja boba z pazurem 🔥.", "Geometryczne cięcie wysmuklające szyję 🦢.", "Lekki, teksturowany bob 🌬️."],
+                    'Pielęgnacja': ["Tafla wody, nie włosy! 💧", "Maksymalne nawilżenie i regeneracja 🧖‍♀️.", "Włosy miękkie jak jedwab 🧣.", "Odbudowa struktury od wewnątrz 🧬."],
+                    'Metamorfoza': ["Totalna odmiana – inna osoba! 😲", "Odważna decyzja i spektakularny wynik 🎆.", "Zaufanie zaprocentowało! ❤️", "Zmiana o 180 stopni! 🔄"]
+                }
+            },
+            male: {
+                openers: [
+                    "{intro_exclaim} {adj_pos_m} {noun_hair_m} wjeżdża! 👊",
+                    "Klasyka czy nowoczesność? Dziś {adj_pos_m} mix. 💈",
+                    "Męski styl. {adj_pos_m} efekt końcowy. 🔥",
+                    "Ostry look na weekend. {adj_pos_m} {noun_hair_m}. 🔪",
+                    "Detale mają znaczenie. Spójrzcie na ten {noun_hair_m}. 👀",
+                    "Precyzja. Styl. Charakter. {adj_pos_m} wybór. 💪",
+                    "Szybka akcja, {adj_pos_m} efekt. ⚡",
+                    "Barber life. 💈 Dziś {adj_pos_m} {noun_hair_m}.",
+                    "Zadbany facet to podstawa. 👌 {adj_pos_m} rezultat.",
+                    "Geometria i styl. 📐 {adj_pos_m} {noun_hair_m}."
+                ],
+                middles: {
+                    default: [
+                        "Dopasowanie do kształtu głowy i brody 📏.",
+                        "Klasyczna elegancja w męskim wydaniu 🎩.",
+                        "Łatwe w układaniu na co dzień 🕒.",
+                        "Stylizacja zajmuje dosłownie minutę ⏱️.",
+                        "Podkreślenie męskich rysów twarzy 🗿."
+                    ],
+                    'Strzyżenie': ["Czysta forma i technika ✂️.", "Tekstura dodająca charakteru 🌪️.", "Nowoczesne fryzjerstwo męskie 💈.", "Idealnie wypracowana fryzura 👌."],
+                    'Fade': ["Gradient (Fade) ostry jak brzytwa 🔪.", "Cieniowanie od zera – skin fade 💀.", "Płynne przejście to podstawa 📉.", "Perfekcyjny blur na bokach 🌫️."],
+                    'Broda': ["Broda wykonturowana i odżywiona 🧔.", "Zarost pod pełną kontrolą 📐.", "Hot towel i brzytwa w akcji 🧖‍♂️.", "Kształt brody dopasowany do twarzy 👌."],
+                    'Komplet': ["Kompleksowy serwis (włosy + broda) ✅.", "Totalny reset wizerunku 🔄.", "Męskie SPA zaliczone 🥃.", "Odświeżenie na 100% 🔋."]
+                }
+            },
+            closers: {
+                'Elegancki': ["Estetyka. Klasa. Styl. ✨", "Jakość broni się sama. 🛡️", "Ponadczasowe piękno. 🦢", "Elegancja w każdym calu. 📏", "Sztuka fryzjerstwa. 🎨", "Czysta perfekcja. 💎"],
+                'Luźny': ["Dobre wibracje! ✌️", "Jak oceniacie? 😎", "Po prostu sztos! 🔥", "Luz i styl. 🤙", "Gotowa/y na podbój miasta! 🏙️", "Świeży look! 🍃"],
+                'Ekspert': ["Profesjonalizm przede wszystkim. 🎓", "Wiedza poparta doświadczeniem. 📚", "Twoje włosy w dobrych rękach. 👐", "Dbamy o każdy detal. 🔍", "Pasja tworzenia. ❤️"]
+            }
+        };
+
+        const config = {
+            female: {
+                services: [{ n: 'Koloryzacja', i: '🎨' }, { n: 'Strzyżenie', i: '💇‍♀️' }, { n: 'Stylizacja', i: '💃' }, { n: 'Pielęgnacja', i: '💆‍♀️' }, { n: 'Keratyna', i: '✨' }],
+                details: [{ n: 'Blond', i: '👱‍♀️' }, { n: 'Brąz', i: '🌰' }, { n: 'Rudy', i: '🦊' }, { n: 'Bob', i: '📐' }, { n: 'Długie', i: '📏' }, { n: 'Loki', i: '🌀' }, { n: 'Fale', i: '🌊' }, { n: 'Grzywka', i: '💇‍♀️' }, { n: 'Metamorfoza', i: '🦋' }]
+            },
+            male: {
+                services: [{ n: 'Strzyżenie', i: '✂️' }, { n: 'Broda', i: '🧔' }, { n: 'Komplet', i: '💈' }, { n: 'Odsiwianie', i: '🎩' }],
+                details: [{ n: 'Fade', i: '📉' }, { n: 'Klasyk', i: '👔' }, { n: 'Tekstura', i: '🌪️' }, { n: 'Skin Fade', i: '💀' }, { n: 'Buzz Cut', i: '📏' }]
+            }
+        };
+
+        const hashtagsBase = "#fryzjer #salonfryzjerski #hair #stylizacja #portfolio";
+
+        // --- LOGIC ---
+        let currentGender = 'female';
+        let selectedService = null;
+        let selectedTags = [];
+        let selectedVibe = 'Elegancki';
+
+        function spin(template) {
+            return template.replace(/\{(\w+)\}/g, (_, key) => {
+                const list = synonyms[key];
+                return list ? list[Math.floor(Math.random() * list.length)] : `{${key}}`;
+            });
+        }
+
+        window.onload = renderTags;
+
+        window.setGender = function (g) {
+            currentGender = g;
+            document.querySelectorAll('.gender-option').forEach(e => e.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            selectedService = null;
+            selectedTags = [];
+            document.getElementById('resultsArea').innerHTML = '';
+            renderTags();
+        }
+
+        function renderTags() {
+            const data = config[currentGender];
+            const render = (arr, elId, type) => {
+                const cont = document.getElementById(elId);
+                cont.innerHTML = '';
+                arr.forEach(item => {
+                    const btn = document.createElement('button');
+                    btn.className = 'tag-btn';
+                    btn.dataset.value = item.n;
+                    btn.onclick = () => type === 's' ? selectService(btn) : selectDetail(btn);
+                    btn.innerHTML = `<span class="icon">${item.i}</span> ${item.n}`;
+                    cont.appendChild(btn);
+                });
+            };
+            render(data.services, 'serviceTags', 's');
+            render(data.details, 'detailTags', 'd');
+        }
+
+        window.selectService = function (btn) {
+            const grp = btn.parentElement;
+            grp.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedService = btn.dataset.value;
+        }
+
+        window.selectDetail = function (btn) {
+            btn.classList.toggle('selected');
+            const val = btn.dataset.value;
+            if (selectedTags.includes(val)) selectedTags = selectedTags.filter(t => t !== val);
+            else selectedTags.push(val);
+        }
+
+        window.selectTag = function (btn, type) {
+            const grp = btn.parentElement;
+            grp.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedVibe = btn.textContent.trim().split(' ').slice(1).join(' ');
+        }
+
+        function rnd(arr) { return arr ? arr[Math.floor(Math.random() * arr.length)] : ''; }
+
+        window.generateCaptions = function (append = false) {
+            if (!selectedService) { alert('⚠️ Wybierz usługę!'); return; }
+
+            const res = document.getElementById('resultsArea');
+            if (!append) res.innerHTML = '';
+
+            // Remove existing "more" section if exists to move it to the end
+            const existingMore = document.getElementById('moreSection');
+            if (existingMore) existingMore.remove();
+
+            const genderData = templates[currentGender];
+            const middleDB = genderData.middles;
+
+            for (let i = 0; i < 20; i++) {
+                let parts = [];
+
+                // 1. OPENER
+                const rawOpener = rnd(genderData.openers);
+                parts.push(spin(rawOpener));
+
+                // 2. MIDDLE
+                let specifics = [];
+                if (middleDB[selectedService]) specifics.push(...middleDB[selectedService]);
+                selectedTags.forEach(t => { if (middleDB[t]) specifics.push(...middleDB[t]); });
+
+                if (specifics.length > 0) {
+                    const picked = specifics.sort(() => 0.5 - Math.random()).slice(0, Math.random() > 0.5 ? 1 : 2);
+                    parts.push(...picked);
+                } else {
+                    parts.push(rnd(middleDB.default));
+                }
+
+                // 3. CLOSER
+                parts.push(rnd(templates.closers[selectedVibe]));
+
+                // 4. HASHTAGS
+                let serviceTag = `#${selectedService.toLowerCase().replace(/ /g, '')}`;
+                let baseOptions = currentGender === 'female' ? ['#metamorfoza', '#lifestyle', '#wlosy'] : ['#barber', '#meskieciecie', '#fryzjer'];
+                let tags = [serviceTag];
+                if (selectedTags.length > 0) { selectedTags.forEach(t => tags.push(`#${t.toLowerCase().replace(/ /g, '')}`)); }
+                for (let b of baseOptions) { if (tags.length < 5) tags.push(b); }
+                let commons = hashtagsBase.split(' ');
+                for (let c of commons) { if (tags.length < 5 && !tags.includes(c)) tags.push(c); }
+                let finalTagsString = tags.slice(0, 5).join(' ');
+
+                const html = `
+                    <div class="result-item">
+                        <div class="result-icon">${selectedService === 'Broda' ? '🧔' : (currentGender === 'female' ? '💇‍♀️' : '💈')}</div>
+                        <div class="result-text">${parts.join('\n\n')}</div>
+                        <div style="font-size:0.85rem; color:#64748b; margin-bottom:15px;">${finalTagsString}</div>
+                        <div class="copy-link" onclick="copyText(this)">✂️ Kopiuj Całość</div>
+                    </div>`;
+                res.insertAdjacentHTML('beforeend', html);
+            }
+
+            // ADD "LOAD MORE" SECTION
+            const moreHtml = `
+                <div id="moreSection" class="more-section">
+                    <p class="more-text">Możesz wygenerować jeszcze więcej unikalnych kombinacji!</p>
+                    <button class="more-btn" onclick="generateCaptions(true)">🔄 Generuj Kolejne 20</button>
+                </div>
+            `;
+            res.insertAdjacentHTML('beforeend', moreHtml);
+        }
+
+        window.copyText = function (btn) {
+            const parent = btn.parentElement;
+            const text = parent.querySelector('.result-text').innerText;
+            const tags = parent.querySelectorAll('div')[1].innerText;
+            navigator.clipboard.writeText(text + "\n\n" + tags);
+            const old = btn.innerHTML;
+            btn.innerHTML = "✅ Skopiowano";
+            setTimeout(() => btn.innerHTML = old, 1500);
+        }
+    </script>
+</body>
+
+</html>
